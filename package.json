@@ -1,7 +1,16 @@
 {
   "name": "md-links",
   "version": "0.1.0",
+  "description": "Analiza archivo/archivos .md en busca de enlaces para luego validar el estado de estos",
   "engines": {
     "node": ">=16.x"
+  },
+  "main": "./src/index.js",
+  "bin": {
+    "mdSearch": "./src/md-links.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
+
 }
