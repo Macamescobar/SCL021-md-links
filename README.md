@@ -23,4 +23,9 @@ mdSearch es una librería de Javascript creada a partir de NodeJs, la cual va a 
 
 ## 3. Diagramas de flujo
 
-![diagrama-api] (/src/img/diagrama-api.png)
+** Diagrama API 
+![diagrama-api](/src/img/diagrama-api.png)
+
+** Diagrama CLI
+
+![diagrama-cli](/src/img/diagrama-CLI.png)
