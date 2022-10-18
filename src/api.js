@@ -6,16 +6,11 @@ const path = require("path");
 const fs = require("fs");
 //Modulo, solicitud HTTP
 const fetch = require("node-fetch");
-// Expresión regular que busca links en los archivos
-//const urlRegEx = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
 
 ////////// 1. Returns an array containing the arguments,
 // the second element is the path for the js file.
 const arguments = process.argv[2];
-
 const [ , , ruta, ...args] = process.argv
-//args.includes("--stats") 
-console.log(args.includes("--stats"));
 
 ////////// 2. Verifica si existe el archivo en la ruta dada o no (retorna true o false)
 const validatePath = (route) => fs.existsSync(route);
@@ -99,7 +94,7 @@ const mdLinks = () => {
       const result = validateLinks(urls);
       let arrayLinks = [];
       //console.log({ result });
-    Promise.allSettled(result)
+     Promise.allSettled(result)
       .then((response) => {
         response.forEach((resLinks) => {
           //console.log(resLinks);
@@ -121,8 +116,3 @@ const mdLinks = () => {
 };
 mdLinks();
 
-
-
-
-
-module.exports = { validatePath };
