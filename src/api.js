@@ -13,6 +13,10 @@ const fetch = require("node-fetch");
 // the second element is the path for the js file.
 const arguments = process.argv[2];
 
+const [ , , ruta, ...args] = process.argv
+//args.includes("--stats") 
+console.log(args.includes("--stats"));
+
 ////////// 2. Verifica si existe el archivo en la ruta dada o no (retorna true o false)
 const validatePath = (route) => fs.existsSync(route);
 
@@ -31,9 +35,11 @@ const mdExtension = (routes) => {
 };
 
 ///////// 6. Leer el archivo y retornar su contenido
-const readFile = (route) =>
-  fs.readFileSync(route, { encoding: "utf-8", flag: "r" });
-
+const readFile = (route) => {
+  console.log({route})
+  return fs.readFileSync(absolutePath(route), { encoding: "utf-8", flag: "r" });
+}
+  
 //////////// 6.Función que extrae archivos .md
 function searchFileMd(route) {
   let allLinks = [];
@@ -43,6 +49,7 @@ function searchFileMd(route) {
     // console.log({readDirectory});
     const filesMd = mdExtension(readDirectory);
     filesMd.forEach((file) => {
+      console.log({file})
       const dataFile = readFile(file);
       //console.log({dataFile});
       //const regularExpression = /(((https?:\/\/)|(www\.))[^\s]+)/g;
@@ -88,31 +95,32 @@ const validateLinks = (arrlinks) => {
 const mdLinks = () => {
   try {
     const urls = searchFileMd(arguments);
-    const result = validateLinks(urls);
-    let arrayLinks = [];
-    //console.log({ result });
+    if (args.includes("--validate")) {
+      const result = validateLinks(urls);
+      let arrayLinks = [];
+      //console.log({ result });
     Promise.allSettled(result)
       .then((response) => {
         response.forEach((resLinks) => {
-          console.log(resLinks);
+          //console.log(resLinks);
+          // Obteniendo links válidos
           if (resLinks.value.status === 200) {
             arrayLinks.push(resLinks);
           }
         });
-        console.log("Total de links:", response.length)
-        console.log("Total de links válidos", arrayLinks.length)
-        console.log("Total de links rotos", response.length - arrayLinks.length)
+        console.log("Total de links＝", response.length)
+        console.log("Total de links válidos✅:", arrayLinks.length)
+        console.log("Total de links rotos❌:", response.length - arrayLinks.length)
       })
       .catch((error) => console.log({ error }));
+    }
+    
   } catch (error) {
     console.error({ error });
   }
 };
 mdLinks();
 
-// Hacer funcion para contar links unicos
-/* const [ , , ruta, ...args] = process.argv
-args.contains("--stats") */
 
 
 
